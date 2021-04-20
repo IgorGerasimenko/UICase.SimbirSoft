@@ -1,6 +1,5 @@
-package Pages;
+package pages;
 
-import Tests.TestBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,14 +9,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Set;
 
-public class HomePage extends TestBase {
+public class HomePage {
+    private WebDriver driver;
 
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver,this);
         this.driver = driver;
     }
 
-    @FindBy(xpath="//a[@class='home-link desk-notif-card__login-new-item desk-notif-card__login-new-item_enter home-link_black_yes home-link_hover_inherit']//div[2]")
+    @FindBy(xpath="//div[@class='desk-notif-card__login-new-item-title']")
     public WebElement signInButton;
 
     @FindBy(xpath="//div[@class='desk-notif-card__mail-title']")
@@ -30,24 +30,19 @@ public class HomePage extends TestBase {
         return this;
     }
 
-    public HomePage login(){
-        open();
-        signInButton.click();
-        passportPage.loginBar.sendKeys("SimbirSoftGerasimenko");
-        passportPage.sigInButton.click();
-        passportPage.passwordBar.sendKeys("Qwerty123");
-        passportPage.sigInButton.click();
-        return this;
+    public HomePage clickSignIn(){
+       signInButton.click();
+       return this;
     }
 
     public void openMailPage(){
-        // получаем набор дескрипторов текущих открытых окон
-       String originalWindow = driver.getWindowHandle();
-       final Set<String> oldWindowsSet = driver.getWindowHandles();
 
-       mailButton.click();
+        String originalWindow = driver.getWindowHandle();
+        final Set<String> oldWindowsSet = driver.getWindowHandles();
 
-        // ожидаем открытия и получаем дескриптор нового окна
+        mailButton.click();
+
+
         String newWindowHandle = (new WebDriverWait(driver, 10))
                 .until(new ExpectedCondition<String>() {
                            public String apply(WebDriver driver) {
@@ -58,9 +53,16 @@ public class HomePage extends TestBase {
                            }
                        }
                 );
-        // переключаемся на новое окно
+
         driver.switchTo().window(newWindowHandle);
 
-        }
+    }
+
+
+
+
+
 
 }
+
+

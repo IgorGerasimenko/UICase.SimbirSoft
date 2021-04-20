@@ -1,13 +1,12 @@
-package Pages;
+package pages;
 
-import Tests.TestBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class PassportPage extends TestBase {
-
+public class PassportPage {
+    private WebDriver driver;
 
     public PassportPage (WebDriver driver) {
         PageFactory.initElements(driver,this);
@@ -22,5 +21,21 @@ public class PassportPage extends TestBase {
 
     @FindBy(xpath="//button[@type='submit']")
     public WebElement sigInButton;
+
+    public PassportPage fillLogin(String login){
+        loginBar.sendKeys(login);
+        return this;
+    }
+
+    public PassportPage fillPassword(String pass){
+        passwordBar.sendKeys(pass);
+        return this;
+    }
+
+    public PassportPage clicklSignIn(){
+        sigInButton.click();
+        return this;
+    }
+
 
 }
