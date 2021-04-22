@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class MailTests  {
+public class MailTests {
     public WebDriver driver;
     public MailPage mailPage;
     public HomePage homePage;
@@ -30,11 +30,12 @@ public class MailTests  {
     }
 
     @After
-    public void close() { driver.quit();
+    public void close() {
+        driver.quit();
     }
 
     @Test
-    public void UITest(){
+    public void UITest() {
         homePage
                 .open()
                 .clickSignIn();
@@ -45,17 +46,16 @@ public class MailTests  {
                 .clicklSignIn();
         homePage
                 .openMailPage();
+        int themeCountBeforeSendMessage = mailPage.calcMessage("Simbirsoft theme");
         mailPage
-                .getThemeCountBeforeSendMessage()
                 .createNewMessage()
                 .fillEmailAdress("SimbirSoftGerasimenko@yandex.ru")
                 .fillTheme("Simbirsoft theme")
-                .fillTextBox("найдено " + mailPage.themeCountBeforeSendMessage + " писем/письма")
+                .fillTextBox("найдено " + mailPage.calcMessage("Simbirsoft theme") + " писем/письма")
                 .sendMessage()
                 .returnToInbox()
-                .refreshPage()
-                .getThemeCountAfterSendMessage();
-        Assert.assertEquals(mailPage.themeCountAfterSendMessage-1, mailPage.themeCountBeforeSendMessage);
+                .refreshPage();
+        Assert.assertEquals(themeCountBeforeSendMessage, mailPage.calcMessage("Simbirsoft theme") - 1);
     }
 
 }
