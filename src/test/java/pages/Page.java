@@ -13,4 +13,8 @@ public class Page {
         wait = new WebDriverWait(driver, 10);
     }
 
+    public void refreshPage() {
+        driver.navigate().refresh();
+    }
+
 }

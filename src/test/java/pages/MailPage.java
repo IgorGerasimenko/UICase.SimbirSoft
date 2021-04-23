@@ -10,12 +10,6 @@ import java.util.List;
 
 public class MailPage extends Page {
 
-    public MailPage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
-    }
-
     @FindBy(xpath = "//span[@class='mail-ComposeButton-Text']")
     public WebElement composeButton;
 
@@ -34,18 +28,18 @@ public class MailPage extends Page {
     @FindBy(xpath = "//a[contains(text(),'Вернуться во \"Входящие\"')]")
     public WebElement returnToInboxButton;
 
-    public int calcMessage(String theme) {
+    public MailPage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
+
+    public int getMessageCountByTheme(String theme) {
         List<WebElement> themesCountList = driver.findElements(By.xpath("//span[@title='" + theme + "']"));
         return themesCountList.size();
     }
 
     public MailPage returnToInbox() {
         returnToInboxButton.click();
-        return this;
-    }
-
-    public MailPage refreshPage() {
-        driver.navigate().refresh();
         return this;
     }
 

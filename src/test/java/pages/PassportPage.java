@@ -5,34 +5,33 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class PassportPage {
-    private WebDriver driver;
+public class PassportPage extends Page {
 
-    public PassportPage (WebDriver driver) {
-        PageFactory.initElements(driver,this);
-        this.driver = driver;
-    }
-
-    @FindBy(xpath="//input[@id='passp-field-login']")
+    @FindBy(xpath = "//input[@id='passp-field-login']")
     public WebElement loginBar;
 
-    @FindBy(xpath="//input[@id='passp-field-passwd']")
+    @FindBy(xpath = "//input[@id='passp-field-passwd']")
     public WebElement passwordBar;
 
-    @FindBy(xpath="//button[@type='submit']")
+    @FindBy(xpath = "//button[@type='submit']")
     public WebElement sigInButton;
 
-    public PassportPage fillLogin(String login){
+    public PassportPage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
+
+    public PassportPage fillLogin(String login) {
         loginBar.sendKeys(login);
         return this;
     }
 
-    public PassportPage fillPassword(String pass){
+    public PassportPage fillPassword(String pass) {
         passwordBar.sendKeys(pass);
         return this;
     }
 
-    public PassportPage clicklSignIn(){
+    public PassportPage clickSignIn() {
         sigInButton.click();
         return this;
     }
