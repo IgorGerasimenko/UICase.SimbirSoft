@@ -1,20 +1,16 @@
 package apiTests;
-import static io.restassured.RestAssured.*;
-import static org.assertj.core.api.Assertions.assertThat;
-
 
 import apiTests.pojos.UserPojo;
 import io.restassured.http.ContentType;
-import org.assertj.core.api.Assertions;
-import org.junit.Assert;
 import org.junit.Test;
 import java.util.List;
-
+import static io.restassured.RestAssured.given;
+import static org.junit.Assert.assertNotNull;
 
 public class Users {
 
     @Test
-    public void getUsers (){
+    public void checkGeorgBluthEmailPattern (){
         List<UserPojo> users = given()
                 .baseUri("https://reqres.in/api")
                 .basePath("/users")
@@ -23,25 +19,43 @@ public class Users {
                 .then()
                 .statusCode(200)
                 .extract().jsonPath().getList("data", UserPojo.class);
-
-
-                assertThat(users)
-                        .extracting(UserPojo::getEmail)
-                        .contains("george.bluth@reqres.in");
-
-
-
-
+                UserPojo result = users.stream()
+                .filter(p -> {
+                    if ("george.bluth@reqres.in".equals(p.getEmail()) &
+                            "George".equals(p.getFirst_Name()) &
+                            "Bluth".equals(p.getLast_Name()))
+                    {
+                        return true;
+                    }
+                        return false;
+                }).findAny()
+                .orElse(null);
+         assertNotNull(result);
     }
 
-//        when().
-//                 get("https://reqres.in/api/users")
-//                .then()
-//                .statusCode(200)
-//                .assertThat(Arrays.asList("data"), hasItems(endsWith("z"), endsWith("o")))
-//                .assertThat().body("page", equalTo("1") );
-////                .assertThat().body("email", equalTo("george.bluth@reqres.in") );
-
-
-
+    @Test
+    public void checkMichaelLawsonEmailPattern  (){
+        List<UserPojo> users = given()
+                .baseUri("https://reqres.in/api")
+                .basePath("/users")
+                .contentType(ContentType.JSON)
+                .when().get()
+                .then()
+                .statusCode(200)
+                .extract().jsonPath().getList("data", UserPojo.class);
+        UserPojo result = users.stream()
+                .filter(p -> {
+                    if ("michael.lawson@reqres.in".equals(p.getEmail()) &
+                            "Michael".equals(p.getFirst_Name()) &
+                            "Lawson".equals(p.getLast_Name()))
+                    {
+                        return true;
+                    }
+                    return false;
+                }).findAny()
+                .orElse(null);
+         assertNotNull(result);
+    }
 }
+
+
