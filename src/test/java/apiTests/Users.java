@@ -1,57 +1,52 @@
 package apiTests;
 
 import apiTests.helpers.UserHelper;
+import apiTests.pojos.User;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static apiTests.helpers.UserHelper.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class Users {
 
     @Test
     public void checkGeorgBluthEmailPattern() {
-        boolean userWasFound = false;
-        UserHelper.getPageCount();
-        int pageCount = Integer.parseInt(UserHelper.pageCount);
+        int pageCount = UserHelper.getPageCount();
 
-        for (pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
-            findUser("George", "Bluth");
+        for (int pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
+            User searchResult = findUser("George", "Bluth", pageNumber);
 
             if (searchResult == null) {
                 System.out.println("На этой странице не найдено такого пользователя, поищу на следующей");
 
             } else {
-                userWasFound = true;
                 System.out.println("Пользователь найден, проверяю его email");
                 assertEquals(searchResult.getEmail(), "george.bluth@reqres.in");
-                break;
+                return;
             }
         }
-        assertTrue(userWasFound);
+        Assert.fail("что-то пошло не так, скорее всего пользователь не был найден");
     }
 
     @Test
     public void checkMichaelLawsonEmailPattern() {
-        boolean userWasFound = false;
-        getPageCount();
-        int pageCount = Integer.parseInt(UserHelper.pageCount);
+        int pageCount = UserHelper.getPageCount();
 
-        for (pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
-            findUser("Michael", "Lawson");
+        for (int pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
+            User searchResult = findUser("Michael", "Lawson", pageNumber);
 
             if (searchResult == null) {
                 System.out.println("На этой странице не найдено такого пользователя, поищу на следующей");
-                continue;
 
             } else {
-                userWasFound = true;
-                System.out.println("Пользователь найден на странице " + pageNumber + ",проверяю его email");
+                System.out.println("Пользователь найден, проверяю его email");
                 assertEquals(searchResult.getEmail(), "michael.lawson@reqres.in");
-                break;
+                return;
             }
         }
-        assertTrue(userWasFound);
+        Assert.fail("что-то пошло не так, скорее всего пользователь не был найден");
     }
+
 }
 

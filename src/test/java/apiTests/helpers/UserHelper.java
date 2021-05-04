@@ -9,13 +9,8 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 
 public class UserHelper {
-    public static String pageCount;
-    public static int pageNumber;
-    public static List<User> users;
-    public static User searchResult;
 
-
-    public static void getPageCount() {
+    public static int getPageCount() {
         JsonPath jspath = given()
                 .when()
                 .get("https://reqres.in/api/users?page=1")
@@ -25,11 +20,13 @@ public class UserHelper {
                 .extract()
                 .jsonPath();
 
-        pageCount = jspath.getString("total_pages");
+        int pageCount = jspath.getInt("total_pages");
         System.out.println("ответ метода 'users' разбит на " + pageCount + " страницы");
+        return pageCount;
     }
 
-    public static void findUser(String firstName, String lastName) {
+    public static User findUser(String firstName, String lastName, int pageNumber) {
+        List<User> users;
         users = given()
                 .contentType(ContentType.JSON)
                 .when()
@@ -38,11 +35,12 @@ public class UserHelper {
                 .statusCode(200)
                 .extract().jsonPath().getList("data", User.class);
 
-        searchResult = users.stream()
+        User searchResult = users.stream()
                 .filter(p ->
                         firstName.equals(p.getFirstName()) &
                                 lastName.equals(p.getLastName()))
                 .findAny()
                 .orElse(null);
+        return searchResult;
     }
 }
