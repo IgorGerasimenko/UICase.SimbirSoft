@@ -8,7 +8,7 @@ import org.junit.Test;
 import static apiTests.helpers.UserHelper.*;
 import static org.junit.Assert.*;
 
-public class Users {
+public class UsersTests {
 
     @Test
     public void checkGeorgBluthEmailPattern() {
