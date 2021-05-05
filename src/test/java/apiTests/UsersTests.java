@@ -34,7 +34,7 @@ public class UsersTests {
         int pageCount = UserHelper.getPageCount();
 
         for (int pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
-            User searchResult = findUser("Michael", "Lawson", pageNumber);
+            User searchResult = findUser("Michael111", "Lawson", pageNumber);
 
             if (searchResult == null) {
                 System.out.println("На этой странице не найдено такого пользователя, поищу на следующей");
