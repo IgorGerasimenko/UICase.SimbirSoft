@@ -1,4 +1,4 @@
-package tests;
+package uiTests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pages.HomePage;
-import pages.MailPage;
-import pages.PassportPage;
+import uiTests.pages.HomePage;
+import uiTests.pages.MailPage;
+import uiTests.pages.PassportPage;
 
 import java.util.concurrent.TimeUnit;
 
